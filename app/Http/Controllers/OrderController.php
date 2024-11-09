@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderSent;
 use App\Models\Order;
+use App\Notifications\OrderShipped;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller implements HasMiddleware
 {
@@ -32,8 +34,9 @@ class OrderController extends Controller implements HasMiddleware
         ]);
 
         $order = $request->user()->orders()->create($sections);
+        Notification::route('mail', $request->user()->email)->notify(new OrderShipped($order));
 
-        Mail::to($request->user()->email)->send(new OrderSent($order));
+        // Mail::to($request->user()->email)->send(new OrderSent($order));
  
         return $order;
     }
