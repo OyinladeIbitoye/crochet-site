@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -20,6 +21,8 @@ class AuthController extends Controller
         $user = User::create($fields);
 
         $token = $user->createToken($request->name);
+
+        event(new UserRegister($user));
 
         return [
             'user' => $user,
