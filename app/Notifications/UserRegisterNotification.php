@@ -1,5 +1,5 @@
-<?php
 
+<<<<<<< HEAD:app/Notifications/UserRegisterNotification.php
 namespace App\Notifications;
 
 use App\Models\User;
@@ -55,3 +55,5 @@ class UserRegisterNotification extends Notification
         ];
     }
 }
+=======
+>>>>>>> d3de740403f14eb3cddbf56b07b4704cd8fae1df:app/Notifications/UserLoginNotification.php
