@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserLogin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -49,6 +50,8 @@ class AuthController extends Controller
 
 
         $token = $user->createToken($user->name);
+
+        event(new UserLogin($user));
 
         return [
             'user' => $user,
