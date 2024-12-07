@@ -22,13 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-<<<<<<< HEAD
         Event::listen(
             UserRegister::class,
             SendRegisterNotification::class,
         );
-=======
-        // 
->>>>>>> d3de740403f14eb3cddbf56b07b4704cd8fae1df
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\OrderSent;
+use App\Jobs\NotifyUserOfNewOrder;
 use App\Models\Order;
 use App\Notifications\OrderShipped;
 use Illuminate\Http\Request;
@@ -34,10 +34,11 @@ class OrderController extends Controller implements HasMiddleware
         ]);
 
         $order = $request->user()->orders()->create($sections);
+
         Notification::route('mail', $request->user()->email)->notify(new OrderShipped($order));
 
-        // Mail::to($request->user()->email)->send(new OrderSent($order));
- 
+        NotifyUserOfNewOrder::dispatch($order);
+
         return $order;
     }
 

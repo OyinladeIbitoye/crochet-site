@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OrderShipped extends Notification
+class OrderCreatedNotification extends Notification
 {
     use Queueable;
 
@@ -35,11 +36,11 @@ class OrderShipped extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->subject('Your Order Details')
-                    ->line('Order Name: ' . $this->order->name)
-                    ->line('Order Prize: ' . $this->order->prize)
+                    ->subject("New Products Have been added to the Website")
+                    ->line("Order Name: {$this->order->name}")
+                    ->line("Order Price: {$this->order->prize}")
                     ->action('Notification Action', url('/'))
-                    ->line('Your orders have been sent out');
+                    ->line('Thank you for trusting this Brand!');
     }
 
     /**
